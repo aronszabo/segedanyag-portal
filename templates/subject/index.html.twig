@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ subject.name }} segédanyagok{% endblock %}
+
+
+{% block body %}
+<!-- Page Content -->
+<div class="container">
+  <h1>{{ subject.name }} segédanyagok</h1>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ path('default') }}">Segédanyag Portál</a></li>
+      <li class="breadcrumb-item"><a href="{{ path('training_list', {'slug': subject.training.slug, 'trtype': subject.training.type}) }}">{{ subject.training.type2 }} {{ subject.training.name }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ subject.name }}</li>
+    </ol>
+  </nav>
+  {% if subject.description is not null and subject.description != "" %}
+    {% if subject.thumbnail is not null and subject.thumbnail != "" %}
+      <div class="row">
+        <div class="col-sm-3">
+          <img src="{{ asset("img/thumbnails/"~subject.thumbnail)}}" alt="{{ subject.name }}" class="main_thumbnail" />
+        </div>
+        <div class="col-sm-9">
+          {{ subject.description|raw }}
+        </div>
+
+      </div>
+      {% else %}
+      <div class="row">
+        <div class="col-sm-12">
+          {{ subject.description|raw }}
+        </div>
+
+      </div>
+    {% endif %}
+  {% endif %}
+  {% for materialtype,tmaterials in materials %}
+  <h2>{{ materialtype }}</h2>
+  <div class="row">
+    {% for material in tmaterials %}
+    <div class="col-sm-4 my-4">
+      <div class="card material-card">
+        <img class="card-img-top" src="{{ asset('/img/thumbnails/'~material.thumbnail) }}" alt="">
+        <div class="card-body">
+          <h4 class="card-title">{{material.title}}</h4>
+          {% if material.metadata is not null and material.metadata != "" %}
+          <p class="metadata">
+            {{material.metadata}}
+          </p>
+          {% endif %}
+          <p class="card-text">
+          {{material.shortDescription}}</p>
+        </div>
+        <div class="card-footer">
+          <a href="{{ path('material_show', { 'trtype': subject.training.type, 'trslug': subject.training.slug, 'sslug': subject.slug, 'slug': material.slug }) }}" class="btn btn-primary">Find Out More!</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

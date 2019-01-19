@@ -1,0 +1,48 @@
+{#}
+{% for training in bsctrainings %}
+          <li class="nav-item {% if croute == 'training_list' and training.id==ctraining.id %} active {% endif %}">
+              <a class="nav-link" href="{{ path('training_list', {'slug': training.slug, 'trtype': 'bsc'}) }}">{{ training.name }}</a>
+           </li>
+{% endfor %}
+{% for training in msctrainings %}
+          <li class="nav-item {% if croute == 'training_list' and training.id==ctraining.id %} active {% endif %}">
+              <a class="nav-link" href="{{ path('training_list', {'slug': training.slug, 'trtype': 'msc'}) }}">{{ training.name }}</a>
+           </li>
+{% endfor %}
+{% for training in bproftrainings %}
+          <li class="nav-item {% if croute == 'training_list' and training.id==ctraining.id %} active {% endif %}">
+              <a class="nav-link" href="{{ path('training_list', {'slug': training.slug, 'trtype': 'bprof'}) }}">{{ training.name }}</a>
+           </li>
+{% endfor %}
+#}
+<li class="nav-item dropdown {% if trainingtype is defined and trainingtype=="bsc" %} active {% endif %}">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    BSc
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    {% for training in bsctrainings %}
+          <a class="dropdown-item" href="{{ path('training_list', {'slug': training.slug, 'trtype': 'bsc'}) }}">{{ training.name }}</a>
+    {% endfor %}
+  </div>
+</li>
+<li class="nav-item dropdown {% if trainingtype is defined and trainingtype=="bprof" %} active {% endif %}">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    BProf
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    {% for training in bproftrainings %}
+          <a class="dropdown-item" href="{{ path('training_list', {'slug': training.slug, 'trtype': 'bprof'}) }}">{{ training.name }}</a>
+    {% endfor %}
+  </div>
+</li>
+
+<li class="nav-item dropdown {% if trainingtype is defined and trainingtype=="msc" %} active {% endif %}">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    MSc
+  </a>
+  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+    {% for training in msctrainings %}
+          <a class="dropdown-item" href="{{ path('training_list', {'slug': training.slug, 'trtype': 'msc'}) }}">{{ training.name }}</a>
+    {% endfor %}
+  </div>
+</li>

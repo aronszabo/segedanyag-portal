@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ training.name }} segédanyagok{% endblock %}
+
+{% block body %}
+<!-- Page Content -->
+<div class="container">
+  <h1>{{ training.name }} segédanyagok</h1>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('default') }}">Segédanyag Portál</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ training.type2 }} {{ training.name }}</li>
+  </ol>
+</nav>
+
+  {% for semester,semestersubjects in subjects if semestersubjects|length>0 %}
+  {% if semester>0 %}<h2>{{ semester }}. félév</h2>{% endif %}
+  <div class="row">
+
+    {% for subject in semestersubjects %}
+    <div class="subject-card col-md-4">
+      <a href="{{ path('subject_list', { 'trtype': training.type, 'trslug': training.slug, 'slug': subject.slug }) }}">
+        <div class="card" style="background:{{ subject.color }}">
+          <div class="card-body">
+            <p><i class="fa fa-{% if subject.icon != "" %}{{ subject.icon }}{% else %}book-open{% endif %}"></i></p>
+            <h5 class="card-title">{{ subject.name }}</h5>
+            <p>{{ subject.subjectcode }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

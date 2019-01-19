@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kapcsolat{% endblock %}
+
+
+{% block body %}
+<!-- Page Content -->
+<div class="container">
+  <img src="{{ asset("img/qepulet.jpg")}}" alt="Kapcsolat" class="w-100" />
+  <h1>Kapcsolat</h1>
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ path('default') }}">Segédanyag Portál</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Kapcsolat</li>
+    </ol>
+  </nav>
+
+  <div class="row text-left">
+    <div class="col-lg-10 mx-auto">
+      {{ textcontent.content|raw }}
+    </div>
+  </div>
+</div>
+{% endblock %}

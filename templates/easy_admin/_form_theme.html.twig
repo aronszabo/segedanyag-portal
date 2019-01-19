@@ -1,0 +1,102 @@
+{% block _material_fileFile_widget %}
+
+<script type="text/javascript" src="{{ asset('js/jquery-1.9.1.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.ui.widget.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.iframe-transport.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.fileupload.js')}}"></script>
+<link rel="stylesheet" href="{{ asset('css/jquery.fileupload.css')}}">
+<style>
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+.progress {
+  overflow: hidden;
+  height: 12px;
+  margin-bottom: 12px;
+  background-color: gray;
+  border-radius: 3px;
+}
+.progress-bar {
+  float: left;
+  width: 0%;
+  height: 100%;
+  font-size: small;
+  line-height: 12px;
+  color: green;
+  text-align: center;
+  background-color: green;
+}
+
+</style>
+<script type="text/javascript">
+$(function () {
+    'use strict';
+    // Change this to the location of your server-side upload handler:
+    var url = window.location.hostname === 'segedanyag.test' ?
+                '//segedanyag.test/' : 'server/php/';
+    $("#material_slug").change(function(){
+      $('#fileupload').fileupload(
+          'option',
+          'formData',
+          {material: {{ easyadmin.item.id+0 }}, cslug: $("#material_slug").val()}
+      );
+    });
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        formData: {material: {{ easyadmin.item.id+0 }}, cslug: $("#material_slug").val()},
+        maxChunkSize: 1000000,// 10 MB
+        done: function (e, data) {
+          var re = /(?:\.([^.]+))?$/;
+
+          var ext = re.exec(data.files[0].name)[1];   // "txt"
+          {% if easyadmin.item is not null and easyadmin.item.subject is not null and easyadmin.item.subject.training is not null %}
+          $("#material_file").val("{{ easyadmin.item.subject.training.type }}/{{ easyadmin.item.subject.training.slug }}/{{ easyadmin.item.subject.slug }}/"+$("#material_slug").val()+"."+ext);
+          {% else %}
+          $("#material_file").val("egyeb/"+$("#material_slug").val()+"."+ext);
+          {% endif %}
+            //$.each(data.result.files, function (index, file) {
+            //    alert(file.name);
+            //});
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+});
+</script>
+
+<span class="btn btn-success fileinput-button" onclick="if($('#material_slug').val()==''){alert('Please provide an identifier name in the slug field.'); return false;} {% if easyadmin.item.id is null %}return !confirm('Please save this page before uploading, to have the file placed in the correct folder.'){% endif %}">
+        <i class="glyphicon glyphicon-plus"></i>
+        <span>Select files...</span>
+        <!-- The file input field used as target for the file upload widget -->
+        <input id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('materials') }}" >
+    </span>
+    <br>
+    <br>
+    <!-- The global progress bar -->
+    <div id="progress" class="progress">
+        <div class="progress-bar progress-bar-success" ></div>
+    </div>
+    <!-- The container for the uploaded files -->
+    <div id="files" class="files"></div>
+    <br>
+{% endblock %}

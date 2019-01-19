@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ material.title }}{% endblock %}
+
+
+{% block body %}
+<!-- Page Content -->
+<div class="container">
+  <h1>{{ material.title }}</h1>
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ path('default') }}">Segédanyag Portál</a></li>
+      <li class="breadcrumb-item"><a href="{{ path('training_list', {'slug': material.subject.training.slug, 'trtype': material.subject.training.type}) }}">{{ material.subject.training.type2 }} {{ material.subject.training.name }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ path('subject_list', { 'trtype': material.subject.training.type, 'trslug': material.subject.training.slug, 'slug': material.subject.slug }) }}">{{ material.subject.name }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ material.title }}</li>
+    </ol>
+  </nav>
+
+  <div class="row text-center">
+    <div class="col-lg-10 mx-auto">
+      {% if material.metadata is not null and material.metadata != "" %}
+      <p class="metadata">
+        {{material.metadata}}
+      </p>
+      {% endif %}
+        {% if material.type.internaltype == 1 %}
+        <p><video controls="" id="videotorium" src="{{ asset('anyagok/'~material.file)}}">
+
+            Your browser does not support the video tag.
+          </video></p>
+          <div class="text-left">
+          <p>
+<small>{{material.metadata}}</small><br/>
+<strong>{{material.shortDescription}}</strong>
+          </p>
+        {{ material.description|raw }}
+      </div>
+        {% endif %}
+        {% if material.type.internaltype == 2 %}
+        {% if material.shortDescription is not null and material.shortDescription != "" %}
+          <p class="text-left"><strong>{{material.shortDescription}}</strong></p>
+        {% endif %}
+        {% if material.description is not null and material.description != "" %}
+          {% if material.thumbnail is not null and material.thumbnail != "" %}
+            <div class="row text-left">
+              <div class="col-sm-3">
+                <img src="{{ asset("img/thumbnails/"~material.thumbnail)}}" alt="{{ material.title }}" class="main_thumbnail" />
+              </div>
+              <div class="col-sm-9">
+                {{ material.description|raw }}
+              </div>
+
+            </div>
+            {% else %}
+            <div class="row">
+              <div class="col-sm-12">
+                {{ material.description|raw }}
+              </div>
+
+            </div>
+          {% endif %}
+        {% endif %}
+          <p>
+            <a class="btn btn-primary btn-lg" href="{{ asset('anyagok/'~material.file)}}" target="_blank"><i class="fa fa-download"></i>&nbsp; Letöltés</a>
+          </p>
+
+        {% endif %}
+  </div>
+</div>
+</div>
+{% endblock %}
