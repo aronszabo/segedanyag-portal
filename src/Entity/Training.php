@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrainingRepository")
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="slug_idx", columns={"slug"})})
+ * @ORM\Table(indexes={@ORM\Index(name="slug_idx", columns={"slug"})})
  */
 class Training
 {
@@ -68,7 +68,7 @@ class Training
         return $this;
     }
     public function __toString() {
-        return $this->name;
+        return $this->getType2().' '.$this->name;
     }
     public function getSlug(): ?string
     {

@@ -40,7 +40,9 @@ class SubjectController extends AbstractController
     public function list($trtype,$trslug,$slug)
     {
 
-        $subject = $this->subjectRepository->findOneBySlug($slug);
+        //$subject = $this->subjectRepository->findOneBySlug($slug);
+        $subject =  $this->subjectRepository->findOneBySlugs($trtype, $trslug, $slug);
+        if ($subject==null) throw $this->createNotFoundException('Subject does not exist');
         $materials = array();
         foreach ($subject->getMaterials() as $material) {
           $materials[$material->getType()->getName()][] = $material;

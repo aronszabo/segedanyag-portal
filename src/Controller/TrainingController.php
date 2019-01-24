@@ -38,8 +38,9 @@ class TrainingController extends AbstractController
      */
     public function list($trtype, $slug)
     {
-
-        $training = $this->trainingRepository->findOneBySlug($slug);
+        //$training = $this->trainingRepository->findOneBySlug($slug);
+        $training = $this->trainingRepository->findOneBySlugs($trtype, $slug);
+        if ($training==null) throw $this->createNotFoundException('Training does not exist');
         $subjects = array(array(),array(),array(),array(),array(),array(),array(),array(),array());
         foreach ($training->getSubjects() as $subject) {
           $subjects[$subject->getSemester()][] = $subject;

@@ -19,6 +19,20 @@ class SubjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Subject::class);
     }
 
+    public function findOneBySlugs($trtype, $trslug, $slug): ?Subject
+    {
+
+        return $this->createQueryBuilder('s')
+            ->leftJoin('s.training', 't')
+            ->andWhere('s.slug = :slug')
+            ->andWhere('t.slug = :trslug')
+            ->andWhere('t.'.TrainingRepository::validateType($trtype).' = true')
+            ->setParameter('slug', $slug)
+            ->setParameter('trslug', $trslug)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
     // /**
     //  * @return Subject[] Returns an array of Subject objects
     //  */

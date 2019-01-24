@@ -9,7 +9,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SubjectRepository")
- * @ORM\Table(uniqueConstraints={@ORM\UniqueConstraint(name="slug_idx", columns={"slug"})})
+ * @ORM\Table(indexes={@ORM\Index(name="slug_idx", columns={"slug"})})
  * @Vich\Uploadable
  */
 class Subject
@@ -32,7 +32,7 @@ class Subject
     private $slug;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Training", inversedBy="subjects")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Training", inversedBy="subjects", fetch="EAGER")
      */
     private $training;
 

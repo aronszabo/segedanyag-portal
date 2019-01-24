@@ -14,11 +14,24 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TrainingRepository extends ServiceEntityRepository
 {
+    public static function validateType($type){
+        return ($type=='msc'||$type=='bprof'?$type:'bsc');
+    }
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Training::class);
     }
+    public function findOneBySlugs($type, $slug): ?Training
+    {
 
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.slug = :slug')
+            ->andWhere('t.'.TrainingRepository::validateType($type).' = true')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
     // /**
     //  * @return Training[] Returns an array of Training objects
     //  */
