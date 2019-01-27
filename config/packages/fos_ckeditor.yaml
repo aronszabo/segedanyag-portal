@@ -3,3 +3,21 @@
 twig:
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+fos_ck_editor:
+    input_sync: true
+    configs:
+        standard_config:
+            toolbar_groups:
+                - { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] }
+                - { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] }
+                - { name: 'links' }
+                - { name: 'insert' }
+                - { name: 'forms' }
+                - { name: 'tools' }
+                - { name: 'others' }
+                - '/'
+                - { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }
+                - { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] }
+                - { name: 'styles' }
+                - { name: 'colors' }
+                - { name: 'about' }

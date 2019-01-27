@@ -3,6 +3,11 @@
   margin-right: .5rem;
   padding-bottom: .1rem;
 }
+.business-header {
+  background: url('../img/kepulet_1920.jpg');
+  text-shadow: 0 0 8px black;
+  font-weight: bold;
+}
 h1{
   margin: 3rem 0;
 }

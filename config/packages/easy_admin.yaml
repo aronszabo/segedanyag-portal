@@ -65,4 +65,4 @@ easy_admin:
             form:
                 fields:
                     - identifier
-                    - { property: 'content', type: 'fos_ckeditor' }
+                    - { property: 'content', type: 'fos_ckeditor', type_options: { config_name: 'standard_config' }  }

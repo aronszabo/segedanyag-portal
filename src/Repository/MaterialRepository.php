@@ -18,7 +18,15 @@ class MaterialRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Material::class);
     }
-
+    public function findLastEntries($limit)
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     // /**
     //  * @return Material[] Returns an array of Material objects
     //  */

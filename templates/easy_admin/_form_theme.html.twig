@@ -47,17 +47,20 @@ $(function () {
     // Change this to the location of your server-side upload handler:
     var url = window.location.hostname === 'segedanyag.test' ?
                 '//segedanyag.test/' : 'server/php/';
-    $("#material_slug").change(function(){
+    function updateUploader(){
       $('#fileupload').fileupload(
           'option',
           'formData',
-          {material: {{ easyadmin.item.id+0 }}, cslug: $("#material_slug").val()}
+          {material: {{ easyadmin.item.id+0 }}, cslug: $("#material_slug").val(), csubject: $("#material_subject").val()}
       );
-    });
+    }
+    $("#material_slug").change(updateUploader);
+    $("#material_subject").change(updateUploader);
+
     $('#fileupload').fileupload({
         url: url,
         dataType: 'json',
-        formData: {material: {{ easyadmin.item.id+0 }}, cslug: $("#material_slug").val()},
+        formData: {material: {{ easyadmin.item.id+0 }}, cslug: $("#material_slug").val(), csubject: $("#material_subject").val()},
         maxChunkSize: 1000000,// 10 MB
         done: function (e, data) {
           var re = /(?:\.([^.]+))?$/;
