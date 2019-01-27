@@ -5,8 +5,11 @@
 }
 .business-header {
   background: url('../img/kepulet_1920.jpg');
+  background-position: bottom;
   text-shadow: 0 0 8px black;
   font-weight: bold;
+  min-height: 150px;
+  height: 30vh;
 }
 h1{
   margin: 3rem 0;
